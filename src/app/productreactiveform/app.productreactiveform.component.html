@@ -202,6 +202,9 @@
   <tbody>
     <tr *ngFor="let prd of products" (click)="getSelectedProduct(prd)">
       <td *ngFor="let h of headers">{{ prd[h] }}</td>
+      <td>
+        <button class="btn btn-danger" (click)="deleteProduct(prd)">X</button>
+      </td>
     </tr>
   </tbody>
 </table>

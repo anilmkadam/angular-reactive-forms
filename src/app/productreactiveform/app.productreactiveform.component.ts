@@ -96,4 +96,10 @@ export class ProductReactiveFormComponent implements OnInit {
     this.products = this.logic.addProduct(this.product);
     console.log(JSON.stringify(this.products));
   }
+
+  deleteProduct(product: Product): void {
+    this.products = this.products.filter(
+      (item) => item.ProductId != product.ProductId
+    );
+  }
 }
