@@ -1,34 +1,181 @@
 <div>
-  <form>
+  <form name="productForm" [formGroup]="productForm" (ngSubmit)="save()">
     <table class="table">
       <tbody>
         <tr>
           <td><label>Product Row ID</label></td>
-          <td><input type="text" name="ProductRowId" /></td>
+          <td>
+            <input
+              type="text"
+              formControlName="ProductRowId"
+              name="ProductRowId"
+            />
+            <div
+              *ngIf="
+                productForm.controls.ProductRowId.invalid &&
+                (productForm.controls.ProductRowId.dirty ||
+                  productForm.controls.ProductRowId.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.ProductRowId.errors.required">
+                ProductRowId is required.
+              </div>
+              <div *ngIf="productForm.controls.ProductRowId.errors.minlength">
+                ProductRowId must be at least 2 characters long.
+              </div>
+              <div *ngIf="productForm.controls.ProductRowId.errors.maxlength">
+                ProductRowId can be at max 8 characters long.
+              </div>
+              <div *ngIf="productForm.controls.ProductRowId.errors.pattern">
+                ProductRowId must be number.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Product ID</label></td>
-          <td><input type="text" name="ProductId" /></td>
+          <td>
+            <input type="text" formControlName="ProductId" name="ProductId" />
+            <div
+              *ngIf="
+                productForm.controls.ProductId.invalid &&
+                productForm.controls.ProductId.dirty
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.ProductId.errors.required">
+                ProductId is required.
+              </div>
+              <div *ngIf="productForm.controls.ProductId.errors.minlength">
+                ProductRowId must be at least 2 characters long.
+              </div>
+              <div *ngIf="productForm.controls.ProductId.errors.maxlength">
+                ProductRowId can be at max 8 characters long.
+              </div>
+              <div *ngIf="productForm.controls.ProductId.errors.present">
+                ProductRowId is already present.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Product Name</label></td>
-          <td><input type="text" name="ProductName" /></td>
+          <td>
+            <input
+              type="text"
+              formControlName="ProductName"
+              name="ProductName"
+            />
+            <div
+              *ngIf="
+                productForm.controls.ProductName.invalid &&
+                (productForm.controls.ProductName.dirty ||
+                  productForm.controls.ProductName.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.ProductName.errors.required">
+                ProductName is required.
+              </div>
+              <div *ngIf="productForm.controls.ProductName.errors.minlength">
+                ProductName must be at least 2 characters long.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Categories</label></td>
-          <td><select name="Categories"></select></td>
+          <td>
+            <select formControlName="CategoryName" name="CategoryName">
+              <option *ngFor="let c of categories" value="{{ c }}">{{
+                c
+              }}</option>
+            </select>
+            <div
+              *ngIf="
+                productForm.controls.CategoryName.invalid &&
+                (productForm.controls.CategoryName.dirty ||
+                  productForm.controls.CategoryName.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.CategoryName.errors.required">
+                ProductName is required.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Manufacturers</label></td>
-          <td><select name="Manufacturers"></select></td>
+          <td>
+            <select formControlName="Manufacturer" name="Manufacturer">
+              <option *ngFor="let m of manufacturers" value="{{ m }}">{{
+                m
+              }}</option>
+            </select>
+            <div
+              *ngIf="
+                productForm.controls.Manufacturer.invalid &&
+                (productForm.controls.Manufacturer.dirty ||
+                  productForm.controls.Manufacturer.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.Manufacturer.errors.required">
+                Manufacturer is required.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Description</label></td>
-          <td><input type="text" name="Description" /></td>
+          <td>
+            <input
+              formControlName="Description"
+              type="text"
+              name="Description"
+            />
+            <div
+              *ngIf="
+                productForm.controls.Description.invalid &&
+                (productForm.controls.Description.dirty ||
+                  productForm.controls.Description.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.Description.errors.required">
+                Description is required.
+              </div>
+              <div *ngIf="productForm.controls.Description.errors.minlength">
+                ProductRowId must be at least 2 characters long.
+              </div>
+              <div *ngIf="productForm.controls.Description.errors.maxlength">
+                ProductRowId can be at max 100 characters long.
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><label>Base Price</label></td>
-          <td><input type="text" name="BasePrice" /></td>
+          <td>
+            <input type="text" formControlName="BasePrice" name="BasePrice" />
+            <div
+              *ngIf="
+                productForm.controls.BasePrice.invalid &&
+                (productForm.controls.BasePrice.dirty ||
+                  productForm.controls.BasePrice.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="productForm.controls.BasePrice.errors.required">
+                BasePrice is required.
+              </div>
+              <div *ngIf="productForm.controls.BasePrice.errors.negative">
+                BasePrice can't be negative
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><input type="submit" name="Save" class="btn btn-primary" /></td>
@@ -45,3 +192,16 @@
     </table>
   </form>
 </div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let h of headers">{{ h }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prd of products" (click)="getSelectedProduct(prd)">
+      <td *ngFor="let h of headers">{{ prd[h] }}</td>
+    </tr>
+  </tbody>
+</table>
